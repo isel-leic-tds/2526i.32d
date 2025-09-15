@@ -16,11 +16,29 @@ data class Piece(
     }
 }
 
-data class Puzzle(
-    val side: Int = PUZZLE_SIDE,
-    val size: Int = side * side
-) {
-    operator fun get(idx: Int): Piece? {
-        return null
+data class Puzzle(val side: Int = PUZZLE_SIDE) {
+    private val pieces: List<Piece?>
+
+    init {
+        require(value = side > 1) {
+            "Side must be greater than 1"
+        }
+        pieces = buildList {
+            repeat(times = (side * side) - 1) {
+                add(Piece(number = it + 1, side = side))
+            }
+            add(null)
+        }
     }
+
+    val size: Int = pieces.size
+
+    operator fun get(idx: Int): Piece? = pieces[idx]
+
+    operator fun get(row: Int, column: Int): Piece? =
+        get(idx = row * side + column)
+}
+
+fun Puzzle.movePieceAt(row: Int, column: Int): Puzzle {
+    return this
 }
