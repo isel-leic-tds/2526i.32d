@@ -8,7 +8,7 @@ fun display(puzzle: Puzzle) {
             if (piece == null) {
                 print(" - ")
             } else {
-                print(String.format("%2d ", piece.number))
+                print(String.format("%2s ", piece.face))
             }
         }
         println()

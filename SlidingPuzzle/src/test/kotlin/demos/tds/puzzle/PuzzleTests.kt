@@ -40,7 +40,7 @@ class PuzzleTests {
         for (i in 0 until sut.size - 1) {
             val piece = sut[i]
             assertNotNull(actual = piece)
-            assertEquals(expected = i + 1, actual = piece.number)
+            assertEquals(expected = i + 1, actual = piece.face.toInt())
         }
     }
 
@@ -51,7 +51,55 @@ class PuzzleTests {
         for (line in 0 until side) {
             val first = sut[line, 0]
             assertNotNull(actual = first)
-            assertEquals(expected = line * side + 1, actual = first.number)
+            assertEquals(expected = line * side + 1, actual = first.face.toInt())
+        }
+    }
+
+    @Test
+    fun `get piece with invalid index fails`() {
+        assertThrows<IllegalArgumentException> {
+            val sut = Puzzle(side = 3)
+            sut[sut.size]
+        }
+    }
+
+    @Test
+    fun `get piece with invalid row fails`() {
+        assertThrows<IllegalArgumentException> {
+            val sut = Puzzle(side = 3)
+            sut[sut.side, 0]
+        }
+    }
+
+    @Test
+    fun `get piece with invalid column fails`() {
+        assertThrows<IllegalArgumentException> {
+            val sut = Puzzle(side = 3)
+            sut[0, sut.side]
+        }
+    }
+
+    @Test
+    fun `get piece with negative index fails`() {
+        assertThrows<IllegalArgumentException> {
+            val sut = Puzzle(side = 3)
+            sut[-1]
+        }
+    }
+
+    @Test
+    fun `get piece with negative row fails`() {
+        assertThrows<IllegalArgumentException> {
+            val sut = Puzzle(side = 3)
+            sut[-1, 0]
+        }
+    }
+
+    @Test
+    fun `get piece with negative column fails`() {
+        assertThrows<IllegalArgumentException> {
+            val sut = Puzzle(side = 3)
+            sut[0, -1]
         }
     }
 
@@ -63,6 +111,6 @@ class PuzzleTests {
         val columnToMove = side - 2
         val sut = initialPuzzle.movePieceAt(row = rowToMove, column = columnToMove)
         assertNull(actual = sut[rowToMove, columnToMove])
-        assertEquals(expected = sut.size - 1, actual = sut[side - 1, side - 1]?.number)
+        assertEquals(expected = sut.size - 1, actual = sut[side - 1, side - 1]?.face?.toInt())
     }
 }
