@@ -7,7 +7,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import kotlin.test.fail
 
 class PuzzleTests {
 
@@ -84,7 +83,28 @@ class PuzzleTests {
     }
 
     @Test
-    fun `move piece adjacent to space moves it and results in correct puzzle state`() {
-        fail("Not yet implemented")
+    fun `movePieceAt adjacent to space moves that piece to the space position`() {
+
+        val sut = Puzzle(side = 3)
+        val pieceOrigin = sut.createCoordinate(row = 2, column = 1)
+        val spaceOrigin = sut.createCoordinate(row = 2, column = 2)
+        val pieceToMove = sut[pieceOrigin]
+
+        val result = sut.movePieceAt(at = pieceOrigin)
+
+        val pieceDestination = spaceOrigin
+        val spaceDestination = pieceOrigin
+
+        assertEquals(expected = pieceToMove, actual = result[pieceDestination])
+        assertNull(actual = result[spaceDestination])
+    }
+
+    @Test
+    fun `movePieceAt not adjacent to space does not move any piece`() {
+        val sut = Puzzle(side = 3)
+        val pieceOrigin = sut.createCoordinate(row = 0, column = 0)
+
+        val result = sut.movePieceAt(at = pieceOrigin)
+        assertEquals(expected = sut, actual = result)
     }
 }
