@@ -6,12 +6,12 @@ import kotlin.math.abs
  * Represents coordinates of the sliding puzzle.
  *
  * IMPORTANT DESIGN NOTE:
- * Coordinates MUST be always valid within the context of a puzzle. This means that row and column are always in
- * the interval 0 until side, where side is the side of the puzzle. This is ensured by validating the coordinates
+ * Coordinates MUST always be valid within the context of a puzzle. This means that row and column are always in
+ * interval 0 until side, where side is the side of the puzzle. This is ensured by validating the coordinates
  * upon creation by the puzzle instance.
  *
  * To control the creation of coordinates to ensure they are always valid within the context of a puzzle, the
- * constructor is made internal, so that coordinates can only be created within the module. Unfortunately, in Kotlin
+ * constructor is made internal so that coordinates can only be created within the module. Unfortunately, in Kotlin
  * we cannot ensure that coordinates are not instantiated from elsewhere in the module, but we can document it here.
  *
  * @property row The row index of the coordinate.

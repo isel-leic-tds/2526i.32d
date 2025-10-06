@@ -1,10 +1,10 @@
 package demos.tds.puzzle.domain
 
-private const val DEFAULT_PUZZLE_SIDE = 4
+const val DEFAULT_PUZZLE_SIDE = 4
 
 /**
  * Represents sliding puzzles.
- * Sliding puzzles are square shaped and always contain a space that is used to move pieces around.
+ * Sliding puzzles are square-shaped and always contain a space used to move pieces around.
  *
  * @property side The side of the square puzzle. Must be greater than 1.
  * @property size The total number of pieces in the puzzle, including the empty space.
@@ -39,6 +39,9 @@ data class Puzzle private constructor(
         }
     )
 
+    private fun isValidRowIndex(row: Int): Boolean = row in 0 until side
+    private fun isValidColumnIndex(column: Int): Boolean = column in 0 until side
+
     /**
      * Gets the piece at the given coordinate, or null if the puzzle's space is at that position.
      * @param at The coordinate of the piece.
@@ -48,19 +51,29 @@ data class Puzzle private constructor(
 
     /**
      * Creates a coordinate for this puzzle.
-     * @param row    The row in the interval 0 until side.
-     * @param column The column in the interval 0 until side.
+     * @param row    The row in interval 0 until side.
+     * @param column The column in interval 0 until side.
      * @return The coordinate.
      * @throws IllegalArgumentException if [row] or [column] are not valid.
      */
     fun createCoordinate(row: Int, column: Int): Coordinate {
-        require(row in 0 until side) { "Invalid row $row" }
-        require(column in 0 until side) { "Invalid column $column" }
+        require(value = isValidRowIndex(row)) { "Invalid row $row" }
+        require(value = isValidColumnIndex(column)) { "Invalid column $column" }
         return Coordinate(row, column)
     }
 
     /**
-     * Converts an index in the pieces list to a coordinate.
+     * Creates a coordinate for this puzzle, or null if the coordinates are invalid.
+     */
+    fun createCoordinateOrNull(row: Int, column: Int): Coordinate? =
+        if (isValidRowIndex(row) && isValidColumnIndex(column)) {
+            Coordinate(row, column)
+        } else {
+            null
+        }
+
+    /**
+     * Converts an index in the piece list to a coordinate.
      * @receiver The index in the pieces list.
      * @return The corresponding coordinate.
      */
@@ -71,9 +84,9 @@ data class Puzzle private constructor(
     }
 
     /**
-     * Converts a coordinate to an index in the pieces list.
+     * Converts a coordinate to an index in the piece list.
      * @receiver The coordinate.
-     * @return The corresponding index in the pieces list.
+     * @return The corresponding index in the piece list.
      */
     private fun Coordinate.toIndex(): Int = row * side + column
 
@@ -110,7 +123,7 @@ data class Puzzle private constructor(
 fun isValidPuzzleSide(side: Int): Boolean = side > 1
 
 /**
- * Computes the actual puzzle size. Sliding puzzles are square shaped.
+ * Computes the actual puzzle size. Sliding puzzles are square-shaped.
  * @param side  the side of the square. It must be an acceptable puzzle side, as checked by [isValidPuzzleSide].
  * @throws [IllegalArgumentException] if [side] is not an acceptable side for a sliding puzzle.
  */
