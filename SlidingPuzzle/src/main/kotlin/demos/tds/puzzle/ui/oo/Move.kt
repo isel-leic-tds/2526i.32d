@@ -4,17 +4,11 @@ package demos.tds.puzzle.ui.oo
  * The "move" command.
  * Moves the piece at the given coordinates if possible.
  */
-class Move : Command {
+class Move : Command<CommandContext.WithPuzzle> {
 
-    override fun execute(context: CommandContext, params: List<String>): CommandResult {
+    override fun execute(context: CommandContext.WithPuzzle, params: List<String>): CommandResult {
 
-        val puzzle = if (context !is CommandContext.WithPuzzle) {
-            throw CommandException.IllegalContext(message = "Move command requires a puzzle")
-        }
-        else {
-            context.puzzle
-        }
-
+        val puzzle = context.puzzle
         val row = params.getOrNull(index = 0)?.toIntOrNull()
         val column = params.getOrNull(index = 1)?.toIntOrNull()
         val at = if (row != null && column != null) {

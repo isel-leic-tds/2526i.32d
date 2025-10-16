@@ -92,7 +92,7 @@ data class Puzzle private constructor(
 
     /**
      * Moves the piece at the given coordinate to the empty space, if possible.
-     * If the piece cannot be moved, returns the same puzzle instance.
+     * If the piece cannot be moved, it returns the same puzzle instance.
      * @param at The coordinate of the piece to move.
      * @return A new puzzle instance with the piece moved, or the same instance if the piece cannot be moved.
      */
@@ -113,6 +113,14 @@ data class Puzzle private constructor(
             this
         }
     }
+}
+
+/**
+ * Shuffles the pieces in this puzzle.
+ * @return A new puzzle instance with the pieces shuffled.
+ */
+fun Puzzle.shuffle(): Puzzle {
+    TODO()
 }
 
 /**

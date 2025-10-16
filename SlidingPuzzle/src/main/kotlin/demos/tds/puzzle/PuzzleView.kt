@@ -2,6 +2,9 @@ package demos.tds.puzzle
 
 import demos.tds.puzzle.domain.Puzzle
 
+/**
+ * Displays the current state of the puzzle on the console.
+ */
 fun display(puzzle: Puzzle) {
     val side = puzzle.side
     for (row in 0 until side) {

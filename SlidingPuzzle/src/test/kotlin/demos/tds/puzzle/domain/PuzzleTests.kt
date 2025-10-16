@@ -92,11 +92,8 @@ class PuzzleTests {
 
         val result = sut.movePieceAt(at = pieceOrigin)
 
-        val pieceDestination = spaceOrigin
-        val spaceDestination = pieceOrigin
-
-        assertEquals(expected = pieceToMove, actual = result[pieceDestination])
-        assertNull(actual = result[spaceDestination])
+        assertEquals(expected = pieceToMove, actual = result[spaceOrigin])
+        assertNull(actual = result[pieceOrigin])
     }
 
     @Test

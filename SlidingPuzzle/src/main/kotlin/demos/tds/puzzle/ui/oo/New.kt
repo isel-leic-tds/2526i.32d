@@ -8,9 +8,9 @@ import demos.tds.puzzle.ui.oo.CommandException.InvalidParameters
  * The "new" command.
  * Creates a new puzzle with the given side (default is [DEFAULT_PUZZLE_SIDE])."
  */
-class New() : Command {
+class New() : Command<CommandContext.Empty> {
 
-    override fun execute(context: CommandContext, params: List<String>): CommandResult {
+    override fun execute(context: CommandContext.Empty, params: List<String>): CommandResult {
         val puzzleSide = when {
             params.size > 1 -> throw InvalidParameters(command = this)
             params.isNotEmpty() -> params[0].toIntOrNull() ?: throw InvalidParameters(command = this)
