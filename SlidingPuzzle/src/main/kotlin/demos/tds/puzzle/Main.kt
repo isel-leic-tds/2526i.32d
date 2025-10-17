@@ -11,6 +11,8 @@ import demos.tds.puzzle.ui.oo.toCommand
  *  - move <row> <column>: moves the piece at the given coordinate (0-based)
  *  - shuffle: shuffles the puzzle
  *  - quit: exits the application
+ *  - export <file>: exports the puzzle to a text file
+ *  - import <file>: imports a puzzle from a text file
  */
 fun main() {
     println("Welcome to the sliding puzzle application!")

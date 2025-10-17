@@ -104,4 +104,29 @@ class PuzzleTests {
         val result = sut.movePieceAt(at = pieceOrigin)
         assertEquals(expected = sut, actual = result)
     }
+
+    @Test
+    fun `fromListOrNull with empty list returns null`() {
+        val result = Puzzle.fromListOrNull(list = emptyList())
+        assertNull(actual = result)
+    }
+
+    @Test
+    fun `fromListOrNull with more than one null returns null`() {
+        val result = Puzzle.fromListOrNull(list = List(size = 9) { null })
+        assertNull(actual = result)
+    }
+
+    @Test
+    fun `fromListOrNull with invalid size list returns null`() {
+        val size = 8
+        val result = Puzzle.fromListOrNull(
+            list = buildList {
+                repeat(times = size) {
+                    add(if (it + 1 == size) null else Piece(face = it.toString()))
+                }
+            }
+        )
+        assertNull(actual = result)
+    }
 }

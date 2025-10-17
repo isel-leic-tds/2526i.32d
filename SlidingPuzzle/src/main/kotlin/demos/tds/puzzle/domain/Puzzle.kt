@@ -42,11 +42,16 @@ data class Puzzle private constructor(
     )
 
     companion object {
-        fun fromListOrNull(list: List<Piece?>): Puzzle = Puzzle(
-            side = sqrt(list.size.toDouble()).toInt(),
-            size = list.size,
-            pieces = list
-        )
+
+        fun fromListOrNull(list: List<Piece?>): Puzzle? = when {
+            !isValidPuzzleSize(list.size) -> null
+            list.count { it == null } != 1 -> null
+            else -> Puzzle(
+                side = sqrt(list.size.toDouble()).toInt(),
+                size = list.size,
+                pieces = list
+            )
+        }
     }
 
     private fun isValidRowIndex(row: Int): Boolean = row in 0 until side
@@ -143,10 +148,21 @@ fun isValidPuzzleSide(side: Int): Boolean = side > 1
  * @param side  the side of the square. It must be an acceptable puzzle side, as checked by [isValidPuzzleSide].
  * @throws [IllegalArgumentException] if [side] is not an acceptable side for a sliding puzzle.
  */
-fun computePuzzleSize(side: Int): Int  {
+fun computePuzzleSize(side: Int): Int {
     require(isValidPuzzleSide(side)) {
         "Side must be greater than 1"
     }
     return side * side
 }
 
+/**
+ * Converts an integer to a valid puzzle side. If the integer is not a valid puzzle side, the return value is the nearest
+ * valid puzzle side smaller than the integer.
+ */
+private fun Int.toPuzzleSide(): Int = sqrt(this.toDouble()).toInt()
+
+/**
+ * Checks whether [size] is a valid puzzle size.
+ */
+fun isValidPuzzleSize(size: Int): Boolean =
+    size.toPuzzleSide().let { it > 1 && size == computePuzzleSize(side = it) }
