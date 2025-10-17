@@ -1,5 +1,7 @@
 package demos.tds.puzzle.domain
 
+import kotlin.math.sqrt
+
 const val DEFAULT_PUZZLE_SIDE = 4
 
 /**
@@ -38,6 +40,14 @@ data class Puzzle private constructor(
             add(null)
         }
     )
+
+    companion object {
+        fun fromListOrNull(list: List<Piece?>): Puzzle = Puzzle(
+            side = sqrt(list.size.toDouble()).toInt(),
+            size = list.size,
+            pieces = list
+        )
+    }
 
     private fun isValidRowIndex(row: Int): Boolean = row in 0 until side
     private fun isValidColumnIndex(column: Int): Boolean = column in 0 until side
@@ -113,14 +123,12 @@ data class Puzzle private constructor(
             this
         }
     }
-}
 
-/**
- * Shuffles the pieces in this puzzle.
- * @return A new puzzle instance with the pieces shuffled.
- */
-fun Puzzle.shuffle(): Puzzle {
-    TODO()
+    /**
+     * Creates a new puzzle from shuffling the pieces in this one.
+     * @return A new puzzle instance with its pieces shuffled.
+     */
+    fun shuffle(): Puzzle = Puzzle(side, size, pieces.toMutableList().apply { shuffle() })
 }
 
 /**

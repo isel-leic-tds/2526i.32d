@@ -16,7 +16,7 @@ class New() : Command<CommandContext.Empty> {
             params.isNotEmpty() -> params[0].toIntOrNull() ?: throw InvalidParameters(command = this)
             else -> DEFAULT_PUZZLE_SIDE
         }
-        return CommandResult.Success(puzzle = Puzzle(side = puzzleSide))
+        return CommandResult.Success(puzzle = Puzzle(side = puzzleSide).shuffle())
     }
 
     override fun help(): String {
