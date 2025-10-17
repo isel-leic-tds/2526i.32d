@@ -1,7 +1,6 @@
 package demos.tds.puzzle.ui.oo
 
 import demos.tds.puzzle.domain.Puzzle
-import demos.tds.puzzle.storage.specific.FileSystemStorage
 
 /**
  * Represents a command that can be executed by the application.
@@ -20,20 +19,6 @@ sealed interface Command<in T : CommandContext> {
      */
     fun help(): String
 }
-
-/**
- * Converts a string to a [Command].
- * @return the corresponding [Command] instance.
- * @throws CommandException.Unknown if the string does not correspond to a known command.
- */
-@Suppress("UNCHECKED_CAST")
-fun String.toCommand(): Command<CommandContext> = when(trim().lowercase()) {
-    "new" -> New()
-    "move" -> Move()
-    "import" -> Import(storage = FileSystemStorage())
-    "quit" -> Exit()
-    else -> throw CommandException.Unknown(message = "Illegal command: $this")
-} as Command<CommandContext>
 
 /**
  * Represents the result of executing a command.

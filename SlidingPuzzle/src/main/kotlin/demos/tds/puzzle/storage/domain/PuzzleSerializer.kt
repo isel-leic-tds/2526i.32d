@@ -10,7 +10,8 @@ import demos.tds.puzzle.storage.Serializer
  */
 class PuzzleSerializer : Serializer<Puzzle> {
 
-    override fun serialize(data: Puzzle): String = data.pieces.joinToString(separator = " ") { it?.face ?: "*" }
+    override fun serialize(data: Puzzle): String =
+        data.pieces.joinToString(separator = " ") { it?.face ?: "*" }
 
     override fun deserialize(data: String): Puzzle? {
         val pieces = data
