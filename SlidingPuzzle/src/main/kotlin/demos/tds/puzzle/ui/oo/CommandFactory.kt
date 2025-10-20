@@ -1,6 +1,7 @@
 package demos.tds.puzzle.ui.oo
 
-import demos.tds.puzzle.storage.specific.FileSystemStorage
+import demos.tds.puzzle.domain.Puzzle
+import demos.tds.puzzle.storage.Storage
 
 /**
  * Converts a string to a [Command].
@@ -12,10 +13,11 @@ import demos.tds.puzzle.storage.specific.FileSystemStorage
  * functions as first-class citizens. Should I do it when transitioning to the FP style?
  */
 @Suppress("UNCHECKED_CAST")
-fun String.toCommand(): Command<CommandContext> = when(trim().lowercase()) {
+fun String.toCommand(storage: Storage<String, Puzzle>): Command<CommandContext> = when(trim().lowercase()) {
     "new" -> New()
     "move" -> Move()
-    "import" -> Import(storage = FileSystemStorage())
+    "import" -> Import(storage)
+    "export" -> Export(storage)
     "quit" -> Exit()
     else -> throw CommandException.Unknown(message = "Illegal command: $this")
 } as Command<CommandContext>

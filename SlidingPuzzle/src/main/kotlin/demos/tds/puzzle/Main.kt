@@ -1,5 +1,7 @@
 package demos.tds.puzzle
 
+import demos.tds.puzzle.storage.domain.PuzzleSerializer
+import demos.tds.puzzle.storage.specific.FileSystemStorage
 import demos.tds.puzzle.ui.oo.CommandContext
 import demos.tds.puzzle.ui.oo.CommandException
 import demos.tds.puzzle.ui.oo.CommandResult
@@ -18,13 +20,14 @@ fun main() {
     println("Welcome to the sliding puzzle application!")
 
     var context: CommandContext = CommandContext.Empty
+    val storage = FileSystemStorage(serializer = PuzzleSerializer())
 
     while (true) {
         print(">> ")
         val input = parsedReadLine() ?: continue
 
         try {
-            val command = input.first.toCommand()
+            val command = input.first.toCommand(storage)
             val params = input.second
 
             when(val result = command.execute(context, params)) {
