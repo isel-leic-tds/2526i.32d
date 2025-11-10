@@ -11,8 +11,13 @@ import demos.tds.puzzle.slidingpuzzlecompose.domain.Puzzle
 
 @Composable
 fun App() {
-    var puzzle by remember { mutableStateOf(Puzzle(DEFAULT_PUZZLE_SIDE)) }
+    var puzzle by remember { mutableStateOf(Puzzle(DEFAULT_PUZZLE_SIDE).shuffle()) }
     MaterialTheme {
-        PuzzleView(puzzle, onMakeMove = { TODO("Not yet implemented") })
+        PuzzleView(
+            puzzle = puzzle,
+            onMakeMove = { _, coordinate ->
+                puzzle = puzzle.movePieceAt(at = coordinate)
+            }
+        )
     }
 }

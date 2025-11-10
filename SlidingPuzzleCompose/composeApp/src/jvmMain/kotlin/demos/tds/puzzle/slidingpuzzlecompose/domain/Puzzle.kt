@@ -133,7 +133,11 @@ data class Puzzle private constructor(
      * Creates a new puzzle from shuffling the pieces in this one.
      * @return A new puzzle instance with its pieces shuffled.
      */
-    fun shuffle(): Puzzle = Puzzle(side, size, pieces.toMutableList().apply { shuffle() })
+    fun shuffle(): Puzzle = Puzzle(
+        side = side,
+        size = size,
+        pieces = pieces.toMutableList().apply { shuffle() }
+    )
 }
 
 /**
@@ -166,3 +170,10 @@ private fun Int.toPuzzleSide(): Int = sqrt(this.toDouble()).toInt()
  */
 fun isValidPuzzleSize(size: Int): Boolean =
     size.toPuzzleSide().let { it > 1 && size == computePuzzleSize(side = it) }
+
+/**
+ * Checks whether this puzzle is solved.
+ * @return true if the puzzle is solved, false otherwise.
+ */
+val Puzzle.isSolved: Boolean
+    get() = true

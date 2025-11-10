@@ -7,6 +7,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlin.test.fail
 
 class PuzzleTests {
 
@@ -128,5 +129,24 @@ class PuzzleTests {
             }
         )
         assertNull(actual = result)
+    }
+
+    @Test
+    fun isSolved_inInitialPuzzle_returns_true() {
+        val sut = Puzzle(side = 2)
+        assertTrue(actual = sut.isSolved)
+    }
+
+    @Test
+    fun isSolved_inPuzzleWithOneMove_returns_false() {
+        val sut = Puzzle(side = 3)
+        sut.movePieceAt(at = sut.createCoordinate(row = 0, column = 0))
+        assertFalse(actual = sut.isSolved)
+    }
+
+    @Test
+    fun isSolved_inShuffledPuzzle_returns_false() {
+        val sut = Puzzle(side = 3).shuffle()
+        assertFalse(actual = sut.isSolved)
     }
 }
