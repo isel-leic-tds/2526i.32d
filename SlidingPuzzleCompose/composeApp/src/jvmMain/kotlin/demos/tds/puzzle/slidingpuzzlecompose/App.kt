@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import demos.tds.puzzle.slidingpuzzlecompose.domain.DEFAULT_PUZZLE_SIDE
 import demos.tds.puzzle.slidingpuzzlecompose.domain.Puzzle
+import demos.tds.puzzle.slidingpuzzlecompose.ui.PuzzleView
 
 @Composable
 fun App() {

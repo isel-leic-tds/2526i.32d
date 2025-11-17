@@ -1,4 +1,4 @@
-rootProject.name = "slidingpuzzlecompose"
+rootProject.name = "SlidingPuzzleCompose"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

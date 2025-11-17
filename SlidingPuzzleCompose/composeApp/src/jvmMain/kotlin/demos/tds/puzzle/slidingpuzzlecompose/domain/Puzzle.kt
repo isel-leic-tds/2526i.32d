@@ -52,6 +52,9 @@ data class Puzzle private constructor(
                 pieces = list
             )
         }
+
+        fun fromListOrThrows(list: List<Piece?>): Puzzle = fromListOrNull(list)
+            ?: throw IllegalArgumentException("Invalid puzzle list")
     }
 
     private fun isValidRowIndex(row: Int): Boolean = row in 0 until side
@@ -63,6 +66,13 @@ data class Puzzle private constructor(
      * @return The piece or null, if [at] is empty.
      */
     operator fun get(at: Coordinate): Piece? = pieces[at.row * side + at.column]
+
+    /**
+     * Gets the piece at the given index in the puzzle.
+     * @param index The index of the piece.
+     * @return The piece or null, if the index is out of bounds.
+     */
+    operator fun get(index: Int): Piece? = pieces.getOrNull(index)
 
     /**
      * Creates a coordinate for this puzzle.
@@ -176,4 +186,29 @@ fun isValidPuzzleSize(size: Int): Boolean =
  * @return true if the puzzle is solved, false otherwise.
  */
 val Puzzle.isSolved: Boolean
-    get() = true
+    get() =
+        pieces.withIndex().all { entry ->
+            if (entry.index == size - 1)
+                entry.value == null
+            else
+                entry.value?.face == (entry.index + 1).toString()
+        }
+
+    // TODO: Talk about destructuring declarations
+    // https://kotlinlang.org/docs/destructuring-declarations.html
+
+    // TODO: Use any instead of all
+
+// This is what came out during the class :(
+//        var solved = false
+//        pieces.forEachIndexed { index, piece ->
+//            if (index != (size - 1) && piece == null) {
+//                return false
+//            }
+//
+//            if (index == size - 1)
+//                return piece == null
+//
+//            solved = (piece?.face == (index + 1).toString())
+//        }
+//        return solved
