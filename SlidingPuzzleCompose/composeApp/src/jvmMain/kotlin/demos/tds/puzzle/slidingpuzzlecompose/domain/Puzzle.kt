@@ -185,30 +185,12 @@ fun isValidPuzzleSize(size: Int): Boolean =
  * Checks whether this puzzle is solved.
  * @return true if the puzzle is solved, false otherwise.
  */
+// https://kotlinlang.org/docs/destructuring-declarations.html
 val Puzzle.isSolved: Boolean
     get() =
-        pieces.withIndex().all { entry ->
-            if (entry.index == size - 1)
-                entry.value == null
+        pieces.withIndex().all { (index, value) ->
+            if (index == size - 1)
+                value == null
             else
-                entry.value?.face == (entry.index + 1).toString()
+                value?.face == (index + 1).toString()
         }
-
-    // TODO: Talk about destructuring declarations
-    // https://kotlinlang.org/docs/destructuring-declarations.html
-
-    // TODO: Use any instead of all
-
-// This is what came out during the class :(
-//        var solved = false
-//        pieces.forEachIndexed { index, piece ->
-//            if (index != (size - 1) && piece == null) {
-//                return false
-//            }
-//
-//            if (index == size - 1)
-//                return piece == null
-//
-//            solved = (piece?.face == (index + 1).toString())
-//        }
-//        return solved
