@@ -1,9 +1,8 @@
 package demos.tds.tictactoe
 
-import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.runComposeUiTest
+import androidx.compose.ui.test.*
+import demos.tds.tictactoe.common.LeaveButtonTag
+import demos.tds.tictactoe.title.TitleScreenStartButtonTag
 import kotlin.test.Test
 
 @OptIn(ExperimentalTestApi::class)
@@ -20,13 +19,36 @@ class AppTests {
     }
 
     @Test
-    fun clicking_on_start_button_should_navigate_to_lobby_screen() = runComposeUiTest {
+    fun in_title_screen_clicking_on_start_button_should_navigate_to_lobby_screen() = runComposeUiTest {
 
         setContent { App() }
 
         onNodeWithTag(testTag = TitleScreenStartButtonTag).performClick()
         onNodeWithTag(testTag = AppScreen.Lobby.name).assertExists(
             "Lobby screen should be shown after clicking on start button"
+        )
+    }
+
+    @Test
+    fun in_lobby_screen_selecting_a_user_should_navigate_to_game_screen() = runComposeUiTest {
+        setContent { App() }
+
+        onNodeWithTag(testTag = TitleScreenStartButtonTag).performClick()
+        onNodeWithText(text = "Palecas").performClick()
+        onNodeWithTag(testTag = AppScreen.Game.name).assertExists(
+            "Game screen should be shown after selecting a user"
+        )
+    }
+
+    @Test
+    fun in_lobby_screen_clicking_on_leave_button_should_navigate_to_title_screen() = runComposeUiTest {
+        setContent { App() }
+
+        onNodeWithTag(testTag = TitleScreenStartButtonTag).performClick()
+        onNodeWithTag(testTag = AppScreen.Lobby.name).assertExists()
+        onNodeWithTag(testTag = LeaveButtonTag).performClick()
+        onNodeWithTag(testTag = AppScreen.Title.name).assertExists(
+            "Title screen should be shown after clicking on leave button"
         )
     }
 }

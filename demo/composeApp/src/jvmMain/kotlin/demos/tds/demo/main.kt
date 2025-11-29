@@ -1,14 +1,12 @@
-package demos.tds.tictactoe
+package demos.tds.demo
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import demos.tds.tictactoe.lobby.FakeLobbyService
-import demos.tds.tictactoe.lobby.User
 
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "Tic-Tac-Toe",
+        title = "demo",
     ) {
         App()
     }

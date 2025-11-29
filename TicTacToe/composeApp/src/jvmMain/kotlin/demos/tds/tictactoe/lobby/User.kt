@@ -1,4 +1,4 @@
-package demos.tds.tictactoe
+package demos.tds.tictactoe.lobby
 
 /**
  * Represents a candidate player in the Tic-Tac-Toe game. Candidate players are those who have not yet joined the

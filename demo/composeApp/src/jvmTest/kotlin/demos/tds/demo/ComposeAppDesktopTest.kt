@@ -1,4 +1,4 @@
-package demos.tds.tictactoe
+package demos.tds.demo
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

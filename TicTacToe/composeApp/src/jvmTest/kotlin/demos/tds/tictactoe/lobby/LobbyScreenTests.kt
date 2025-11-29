@@ -1,10 +1,12 @@
-package demos.tds.tictactoe
+package demos.tds.tictactoe.lobby
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
+import demos.tds.tictactoe.AppScreen
+import demos.tds.tictactoe.common.LeaveButtonTag
 import kotlin.test.Test
 
 @OptIn(ExperimentalTestApi::class)
@@ -50,5 +52,11 @@ class LobbyScreenTests {
 
         onNodeWithText(text = usersInLobby.last().name).performClick()
         assert(selectedUser == usersInLobby.last())
+    }
+
+    @Test
+    fun contains_the_leave_button() = runComposeUiTest {
+        setContent { LobbyScreen(usersInLobby = listOf()) }
+        onNodeWithTag(testTag = LeaveButtonTag).assertExists()
     }
 }
