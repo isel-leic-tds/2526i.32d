@@ -1,6 +1,5 @@
 package demos.tds.tictactoe.lobby
 
-import demos.tds.tictactoe.lobby.User
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 

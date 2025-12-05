@@ -6,8 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
@@ -16,14 +20,35 @@ import demos.tds.tictactoe.AppScreen
 import demos.tds.tictactoe.common.ScreenScaffold
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LobbyScreen(
+    viewModel: LobbyScreenViewModel,
+    onUserSelected: (User) -> Unit = { },
+    onLeave: () -> Unit = { }
+) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.fetchLobbies()
+    }
+
+    val usersInLobby = when(val state = viewModel.screenState.value) {
+        is LobbyScreenState.Loading -> state.usersInLobby
+        is LobbyScreenState.Displaying -> state.usersInLobby
+        is LobbyScreenState.Error -> emptyList()
+        is LobbyScreenState.Initial -> emptyList()
+    }
+
+    LobbyScreenView(usersInLobby = usersInLobby, onUserSelected = onUserSelected, onLeave = onLeave)
+}
+
 /**
  * Displays the list of users in the lobby.
  * @param usersInLobby the list of users in the lobby.
  * @param onUserSelected the callback invoked when a user is selected.
+ * @param onLeave the callback invoked when the leave button is clicked.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LobbyScreen(
+fun LobbyScreenView(
     usersInLobby: List<User>,
     onUserSelected: (User) -> Unit = { },
     onLeave: () -> Unit = { }
@@ -33,6 +58,7 @@ fun LobbyScreen(
         onLeave = onLeave,
         modifier = Modifier.testTag(tag = AppScreen.Lobby.name)
     ) {
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(all = 16.dp)
@@ -60,19 +86,14 @@ fun LobbyScreen(
 @Preview
 @Composable
 private fun LobbyScreenPreview() =
-    LobbyScreen(
-            usersInLobby = listOf(
-                User(name = "Palecas"),
-                User(name = "Darth Vader"),
-                User(name = "Palinho"),
-                User(name = "BP"),
-                User(name = "Jabba the Hutt"),
-                User(name = "Han Solo"),
-                User(name = "Leia Organa"),
-                User(name = "C3-PO"),
-                User(name = "R2-D2"),
-                User(name = "Luke Skywalker"),
-                User(name = "Obi-Wan Kenobi"),
-            )
-        )
+    LobbyScreenView(
+        usersInLobby = listOf(
+            User(name = "Captain America"),
+            User(name = "Iron Man"),
+            User(name = "Thor"),
+            User(name = "Hulk"),
+            User(name = "Black Widow"),
+            User(name = "Spider Man"),
+        ),
+    )
 

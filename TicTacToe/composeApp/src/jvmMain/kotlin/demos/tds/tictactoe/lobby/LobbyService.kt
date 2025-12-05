@@ -1,5 +1,7 @@
 package demos.tds.tictactoe.lobby
 
+import kotlinx.coroutines.delay
+
 /**
  * Abstraction that characterizes the lobby service. This service encapsulates the logic of a lobby.
  */
@@ -7,17 +9,17 @@ interface LobbyService {
     /**
      * Gets the list of users currently in the lobby.
      */
-    fun getUsers(): List<User>
+    suspend fun getUsers(): List<User>
 
     /**
      * The user enters the lobby.
      */
-    fun enterLobby(user: User): List<User>
+    suspend fun enterLobby(user: User): List<User>
 
     /**
      * The user leaves the lobby.
      */
-    fun leaveLobby(user: User)
+    suspend fun leaveLobby(user: User)
 }
 
 /**
@@ -32,17 +34,19 @@ class FakeLobbyService : LobbyService {
         User(name = "Roberto Martinez")
     )
 
-    override fun getUsers(): List<User> {
-        Thread.sleep(5000)
+    override suspend fun getUsers(): List<User> {
+        delay(3000)
         return users.toList()
     }
 
-    override fun enterLobby(user: User): List<User> {
+    override suspend fun enterLobby(user: User): List<User> {
+        delay(5000)
         users.add(user)
         return users.toList()
     }
 
-    override fun leaveLobby(user: User) {
+    override suspend fun leaveLobby(user: User) {
+        delay(1000)
         users.remove(user)
     }
 }
