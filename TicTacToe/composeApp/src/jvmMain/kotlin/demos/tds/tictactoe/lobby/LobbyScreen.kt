@@ -11,7 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
@@ -27,8 +27,9 @@ fun LobbyScreen(
     onUserSelected: (User) -> Unit = { },
     onLeave: () -> Unit = { }
 ) {
-    LaunchedEffect(key1 = Unit) {
-        viewModel.fetchLobbies()
+    DisposableEffect(key1 = Unit) {
+        viewModel.startMonitoringLobby()
+        onDispose { viewModel.stopMonitoringLobby() }
     }
 
     val usersInLobby = when(val state = viewModel.screenState.value) {

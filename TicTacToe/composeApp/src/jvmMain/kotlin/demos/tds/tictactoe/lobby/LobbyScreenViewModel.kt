@@ -3,6 +3,8 @@ package demos.tds.tictactoe.lobby
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -14,6 +16,7 @@ sealed interface LobbyScreenState {
 }
 
 class LobbyScreenViewModel(
+    private val localUser: User,
     private val scope: CoroutineScope = CoroutineScope(EmptyCoroutineContext),
     private val service: LobbyService
 ) {
@@ -21,7 +24,9 @@ class LobbyScreenViewModel(
     private val _screenState = mutableStateOf<LobbyScreenState>(LobbyScreenState.Initial)
     val screenState = _screenState as State<LobbyScreenState>
 
-    fun fetchLobbies() {
+    private var monitoringLobbyJob: Job? = null
+
+    private suspend fun fetchUsersInLobby() {
 
         val displayedList = when (val currentState = _screenState.value) {
             is LobbyScreenState.Loading -> throw IllegalStateException("Already loading")
@@ -31,9 +36,34 @@ class LobbyScreenViewModel(
         }
 
         _screenState.value = LobbyScreenState.Loading(usersInLobby = displayedList)
-        scope.launch {
-            val usersInLobby = service.getUsers()
-            _screenState.value = LobbyScreenState.Displaying(usersInLobby = usersInLobby)
+        val usersInLobby = service.getUsers()
+        _screenState.value = LobbyScreenState.Displaying(usersInLobby = usersInLobby)
+    }
+
+    fun startMonitoringLobby() {
+        if (monitoringLobbyJob != null) throw IllegalStateException("Already monitoring")
+
+        monitoringLobbyJob = scope.launch {
+            try {
+                service.enterLobby(localUser)
+                while (true) {
+                    fetchUsersInLobby()
+                    delay(5000)
+                }
+            }
+            finally {
+                scope.launch {
+                    service.leaveLobby(localUser)
+                }
+            }
         }
     }
+
+    fun stopMonitoringLobby() {
+        monitoringLobbyJob?.let {
+            scope.launch { service.leaveLobby(localUser) }
+            it.cancel()
+        }
+    }
+
 }
