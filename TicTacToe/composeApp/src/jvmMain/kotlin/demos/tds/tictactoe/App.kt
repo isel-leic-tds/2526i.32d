@@ -3,8 +3,8 @@ package demos.tds.tictactoe
 import androidx.compose.runtime.*
 import com.mongodb.kotlin.client.MongoClient
 import demos.tds.tictactoe.game.GameScreen
-import demos.tds.tictactoe.lobby.LobbyScreen
-import demos.tds.tictactoe.lobby.LobbyScreenViewModel
+import demos.tds.tictactoe.lobby.ui.LobbyScreen
+import demos.tds.tictactoe.lobby.ui.LobbyScreenViewModel
 import demos.tds.tictactoe.lobby.LobbyServiceMongoDB
 import demos.tds.tictactoe.common.domain.User
 import demos.tds.tictactoe.title.TitleScreen

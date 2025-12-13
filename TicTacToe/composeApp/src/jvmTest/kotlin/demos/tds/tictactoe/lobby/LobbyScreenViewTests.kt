@@ -4,6 +4,7 @@ import androidx.compose.ui.test.*
 import demos.tds.tictactoe.AppScreen
 import demos.tds.tictactoe.common.domain.User
 import demos.tds.tictactoe.common.ui.LeaveButtonTag
+import demos.tds.tictactoe.lobby.ui.LobbyScreenView
 import kotlin.test.Test
 
 @OptIn(ExperimentalTestApi::class)

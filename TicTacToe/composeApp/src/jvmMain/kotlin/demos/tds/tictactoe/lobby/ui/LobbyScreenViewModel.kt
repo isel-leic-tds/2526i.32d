@@ -1,8 +1,10 @@
-package demos.tds.tictactoe.lobby
+package demos.tds.tictactoe.lobby.ui
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import demos.tds.tictactoe.common.domain.User
+import demos.tds.tictactoe.lobby.LobbyService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -23,7 +25,7 @@ class LobbyScreenViewModel(
 ) {
 
     private val _screenState = mutableStateOf<LobbyScreenState>(LobbyScreenState.Initial)
-    val screenState = _screenState as State<LobbyScreenState>
+    val screenState by _screenState as State<LobbyScreenState>
 
     private var monitoringLobbyJob: Job? = null
 
