@@ -17,7 +17,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import demos.tds.tictactoe.AppScreen
-import demos.tds.tictactoe.common.ScreenScaffold
+import demos.tds.tictactoe.common.domain.User
+import demos.tds.tictactoe.common.ui.ScreenScaffold
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,7 +28,8 @@ fun LobbyScreen(
     onUserSelected: (User) -> Unit = { },
     onLeave: () -> Unit = { }
 ) {
-    DisposableEffect(key1 = Unit) {
+    // TODO: Explain the DisposableEffect
+    DisposableEffect(key1 = viewModel) {
         viewModel.startMonitoringLobby()
         onDispose { viewModel.stopMonitoringLobby() }
     }

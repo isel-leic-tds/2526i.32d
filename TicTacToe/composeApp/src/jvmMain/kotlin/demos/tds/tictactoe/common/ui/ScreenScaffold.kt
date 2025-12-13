@@ -1,4 +1,4 @@
-package demos.tds.tictactoe.common
+package demos.tds.tictactoe.common.ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column

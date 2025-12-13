@@ -1,4 +1,4 @@
-package demos.tds.tictactoe.lobby
+package demos.tds.tictactoe.common.domain
 
 import kotlin.test.Test
 import kotlin.test.assertFailsWith

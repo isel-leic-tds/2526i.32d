@@ -3,6 +3,7 @@ package demos.tds.tictactoe.lobby
 import com.mongodb.client.model.Filters
 import com.mongodb.kotlin.client.MongoClient
 import com.mongodb.kotlin.client.MongoDatabase
+import demos.tds.tictactoe.common.domain.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

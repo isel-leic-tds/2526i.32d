@@ -6,7 +6,7 @@ import demos.tds.tictactoe.game.GameScreen
 import demos.tds.tictactoe.lobby.LobbyScreen
 import demos.tds.tictactoe.lobby.LobbyScreenViewModel
 import demos.tds.tictactoe.lobby.LobbyServiceMongoDB
-import demos.tds.tictactoe.lobby.User
+import demos.tds.tictactoe.common.domain.User
 import demos.tds.tictactoe.title.TitleScreen
 
 

@@ -2,6 +2,7 @@ package demos.tds.tictactoe.lobby
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import demos.tds.tictactoe.common.domain.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -52,6 +53,8 @@ class LobbyScreenViewModel(
                 }
             }
             finally {
+                // TODO: Refactor to remove cleanup from here.
+                // Lets give ownership of the viewmodel to the screen.
                 scope.launch {
                     service.leaveLobby(localUser)
                 }
@@ -61,8 +64,8 @@ class LobbyScreenViewModel(
 
     fun stopMonitoringLobby() {
         monitoringLobbyJob?.let {
-            scope.launch { service.leaveLobby(localUser) }
             it.cancel()
+            scope.launch { service.leaveLobby(localUser) }
         }
     }
 

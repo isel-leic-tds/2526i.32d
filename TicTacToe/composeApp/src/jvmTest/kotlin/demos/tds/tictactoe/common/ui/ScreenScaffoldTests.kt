@@ -1,4 +1,4 @@
-package demos.tds.tictactoe.common
+package demos.tds.tictactoe.common.ui
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithTag

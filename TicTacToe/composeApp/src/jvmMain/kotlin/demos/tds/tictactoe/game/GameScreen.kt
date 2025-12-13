@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import demos.tds.tictactoe.AppScreen
-import demos.tds.tictactoe.common.ScreenScaffold
+import demos.tds.tictactoe.common.ui.ScreenScaffold
 
 @Composable
 fun GameScreen() {

@@ -10,7 +10,7 @@ fun main() {
         application {
             Window(
                 onCloseRequest = ::exitApplication,
-                title = "Tic-Tac-Toe",
+                title = "",
             ) {
                 App(dbClient = dbClient)
             }

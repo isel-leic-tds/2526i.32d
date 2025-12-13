@@ -1,5 +1,6 @@
 package demos.tds.tictactoe.lobby
 
+import demos.tds.tictactoe.common.domain.User
 import kotlinx.coroutines.delay
 
 /**
