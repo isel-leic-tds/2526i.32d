@@ -21,16 +21,19 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.mondodb.sync)
+            implementation(libs.slf4j.api)
         }
         commonTest.dependencies {
+            implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.kotlin.test)
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
-
         }
+
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+            implementation(libs.slf4j.simple.impl)
         }
     }
 }

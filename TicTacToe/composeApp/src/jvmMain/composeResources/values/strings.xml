@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Tic Tac Toe</string>
+    <string name="title_screen_start_button_label">Start</string>
+    <string name="lobby_screen_title">Lobby</string>
+    <string name="settings_screen_title">Settings</string>
+    <string name="username_input_label">Your Nickname:</string>
+
+    <string name="game_screen_title">Playing against </string>
+    <string name="game_screen_waiting">Joining match</string>
+    <string name="game_screen_your_turn">It\'s your turn</string>
+    <string name="game_screen_opponent_turn">Opponent\'s turn</string>
+    <string name="game_screen_forfeit">Forfeit</string>
+</resources>

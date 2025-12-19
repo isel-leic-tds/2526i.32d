@@ -28,6 +28,8 @@ interface LobbyService {
  */
 @Suppress("unused")
 class FakeLobbyService : LobbyService {
+
+
     private val users = mutableListOf(
         User(name = "Palecas"),
         User(name = "Darth Vader"),

@@ -2,9 +2,11 @@ package demos.tds.tictactoe
 
 import androidx.compose.ui.test.*
 import com.mongodb.kotlin.client.MongoClient
-import demos.tds.tictactoe.common.ui.LeaveButtonTag
+import demos.tds.tictactoe.common.domain.User
+import demos.tds.tictactoe.common.ui.TopBarBackButtonTag
 import demos.tds.tictactoe.title.TitleScreenStartButtonTag
 import kotlin.test.Test
+import kotlin.test.fail
 
 @OptIn(ExperimentalTestApi::class)
 class AppTests {
@@ -12,48 +14,89 @@ class AppTests {
     private val noOpMongoClient = MongoClient.create()
 
     @Test
-    fun initially_the_title_screen_is_shown() = runComposeUiTest {
+    fun `initially the title screen is shown`() = runComposeUiTest {
 
+        // Arrange & Act
         setContent { App(dbClient = noOpMongoClient) }
 
+        // Assert
         onNodeWithTag(testTag = AppScreen.Title.name).assertExists(
             "Title screen should be shown initially"
         )
     }
 
     @Test
-    fun in_title_screen_clicking_on_start_button_should_navigate_to_lobby_screen() = runComposeUiTest {
+    fun `in title screen clicking on start button should navigate to lobby screen`() = runComposeUiTest {
 
-        setContent { App(dbClient = noOpMongoClient) }
+        // Arrange
+        setContent {
+            App(
+                dbClient = noOpMongoClient,
+                initialUser = User(name = "Test User")
+            )
+        }
 
+        // Act
         onNodeWithTag(testTag = TitleScreenStartButtonTag).performClick()
+
+        // Assert
         onNodeWithTag(testTag = AppScreen.Lobby.name).assertExists(
             "Lobby screen should be shown after clicking on start button"
         )
     }
 
     @Test
-    fun in_lobby_screen_selecting_a_user_should_navigate_to_game_screen() = runComposeUiTest {
+    fun `in lobby screen selecting a user should navigate to game screen`() = runComposeUiTest {
 
-        setContent { App(dbClient = noOpMongoClient) }
+        setContent {
+            App(
+                dbClient = noOpMongoClient,
+                startScreen = AppScreen.Lobby,
+            )
+        }
 
-        onNodeWithTag(testTag = TitleScreenStartButtonTag).performClick()
-        onNodeWithText(text = "Palecas").performClick()
-        onNodeWithTag(testTag = AppScreen.Game.name).assertExists(
-            "Game screen should be shown after selecting a user"
+        fail("To implement")
+    }
+
+    @Test
+    fun `in lobby screen clicking back button should navigate to title screen`() = runComposeUiTest {
+
+        // Arrange
+        setContent {
+            App(
+                dbClient = noOpMongoClient,
+                startScreen = AppScreen.Lobby,
+                initialUser = User(name = "Test User")
+            )
+        }
+
+        // Act
+        onNodeWithTag(testTag = TopBarBackButtonTag).performClick()
+
+        // Assert
+        onNodeWithTag(testTag = AppScreen.Title.name).assertExists(
+            "Title screen should be shown after clicking on leave button"
         )
     }
 
     @Test
-    fun in_lobby_screen_clicking_on_leave_button_should_navigate_to_title_screen() = runComposeUiTest {
+    fun `in settings screen clicking back button should navigate to title screen`() = runComposeUiTest {
 
-        setContent { App(dbClient = noOpMongoClient) }
+        // Arrange
+        setContent {
+            App(
+                dbClient = noOpMongoClient,
+                startScreen = AppScreen.Settings,
+                initialUser = User(name = "Test User")
+            )
+        }
 
-        onNodeWithTag(testTag = TitleScreenStartButtonTag).performClick()
-        onNodeWithTag(testTag = AppScreen.Lobby.name).assertExists()
-        onNodeWithTag(testTag = LeaveButtonTag).performClick()
+        // Act
+        onNodeWithTag(testTag = TopBarBackButtonTag).performClick()
+
+        // Assert
         onNodeWithTag(testTag = AppScreen.Title.name).assertExists(
-            "Title screen should be shown after clicking on leave button"
+            "Title screen should be shown after clicking on back button"
         )
     }
 }

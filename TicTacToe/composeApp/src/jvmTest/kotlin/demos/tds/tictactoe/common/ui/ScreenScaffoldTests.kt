@@ -24,7 +24,7 @@ class ScreenScaffoldTests {
             ScreenScaffold(onLeave = { })
         }
 
-        onNodeWithTag(testTag = LeaveButtonTag)
+        onNodeWithTag(testTag = TopBarBackButtonTag)
             .assertExists("Leave button should be displayed")
     }
 
@@ -34,7 +34,7 @@ class ScreenScaffoldTests {
             ScreenScaffold(onLeave = null)
         }
 
-        onNodeWithTag(testTag = LeaveButtonTag)
+        onNodeWithTag(testTag = TopBarBackButtonTag)
             .assertDoesNotExist()
     }
 
@@ -45,7 +45,7 @@ class ScreenScaffoldTests {
             ScreenScaffold(onLeave = { onLeaveCalled = true })
         }
 
-        onNodeWithTag(testTag = LeaveButtonTag).performClick()
+        onNodeWithTag(testTag = TopBarBackButtonTag).performClick()
         assert(onLeaveCalled)
     }
 }

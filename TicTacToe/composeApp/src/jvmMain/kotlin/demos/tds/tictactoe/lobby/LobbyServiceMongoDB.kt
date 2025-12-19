@@ -6,21 +6,26 @@ import com.mongodb.kotlin.client.MongoDatabase
 import demos.tds.tictactoe.common.domain.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 private const val DB_NAME = "tictactoe"
 private const val LOBBY_COLLECTION_NAME = "lobby"
 
 /**
  * Implementation of [LobbyService] that uses MongoDB as a backing store.
- *
- * DESIGN NOTE: [MongoClient] is [java.io.Closeable]. If we were to instantiate it here, we would have to make this
- * class [java.io.Closeable] too. By injecting it, we push the responsibility of closing the client to the caller.
  */
 class LobbyServiceMongoDB(private val dbClient: MongoClient) : LobbyService {
+
+    private val logger: Logger = LoggerFactory.getLogger("LobbyServiceMongoDB")
 
     private val database: MongoDatabase by lazy {
         dbClient.getDatabase(DB_NAME)
     }
+
+    /**
+     * Retrieves all users from the database. It's a blocking I/O operation.
+     */
     private fun getAllUsers(): List<User> = database
         .getCollection<User>(LOBBY_COLLECTION_NAME)
         .find()
@@ -28,11 +33,13 @@ class LobbyServiceMongoDB(private val dbClient: MongoClient) : LobbyService {
 
     override suspend fun getUsers(): List<User> =
         withContext(Dispatchers.IO) {
+            logger.info("Retrieving users in the lobby from database")
             getAllUsers()
         }
 
     override suspend fun enterLobby(user: User): List<User> =
         withContext(Dispatchers.IO) {
+            logger.info("Adding user ${user.name} to lobby")
             database
                 .getCollection<User>(LOBBY_COLLECTION_NAME)
                 .insertOne(user)
@@ -41,6 +48,7 @@ class LobbyServiceMongoDB(private val dbClient: MongoClient) : LobbyService {
 
     override suspend fun leaveLobby(user: User) {
         withContext(Dispatchers.IO) {
+            logger.info("Removing user ${user.name} from lobby")
             database
                 .getCollection<User>(LOBBY_COLLECTION_NAME)
                 .deleteOne(

@@ -3,7 +3,7 @@ package demos.tds.tictactoe.lobby
 import androidx.compose.ui.test.*
 import demos.tds.tictactoe.AppScreen
 import demos.tds.tictactoe.common.domain.User
-import demos.tds.tictactoe.common.ui.LeaveButtonTag
+import demos.tds.tictactoe.common.ui.TopBarBackButtonTag
 import demos.tds.tictactoe.lobby.ui.LobbyScreenView
 import kotlin.test.Test
 
@@ -57,6 +57,6 @@ class LobbyScreenViewTests {
     @Test
     fun contains_the_leave_button() = runComposeUiTest {
         setContent { LobbyScreenView(usersInLobby = listOf()) }
-        onNodeWithTag(testTag = LeaveButtonTag).assertExists()
+        onNodeWithTag(testTag = TopBarBackButtonTag).assertExists()
     }
 }

@@ -17,11 +17,14 @@ import androidx.compose.ui.unit.dp
 import demos.tds.tictactoe.AppScreen
 import demos.tds.tictactoe.common.domain.User
 import demos.tds.tictactoe.common.ui.ScreenScaffold
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import tictactoe.composeapp.generated.resources.Res
+import tictactoe.composeapp.generated.resources.lobby_screen_title
 
 
 /**
- * Displays the list of users in the lobby.
+ * Displays the lobby.
  * @param usersInLobby the list of users in the lobby.
  * @param onUserSelected the callback invoked when a user is selected.
  * @param onLeave the callback invoked when the leave button is clicked.
@@ -33,11 +36,10 @@ fun LobbyScreenView(
     onLeave: () -> Unit = { }
 ) {
     ScreenScaffold(
-        title = "Lobby",
+        title = stringResource(Res.string.lobby_screen_title),
         onLeave = onLeave,
         modifier = Modifier.testTag(tag = AppScreen.Lobby.name)
     ) {
-
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(all = 16.dp)

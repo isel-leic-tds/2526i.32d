@@ -6,6 +6,17 @@ package demos.tds.tictactoe.common.domain
  */
 data class User(val name: String) {
     init {
-        require(name.isNotBlank()) { "User name cannot be blank" }
+        require(name.isValidUserName()) { "Username cannot be blank" }
     }
 }
+
+/**
+ * Checks if the given string is a valid username.
+ */
+fun String.isValidUserName() = !isBlank()
+
+
+/**
+ * Converts this string to a [User] object, or returns null if the string is not a valid username.
+ */
+fun String.toUserOrNull() = if (isValidUserName()) User(this) else null
