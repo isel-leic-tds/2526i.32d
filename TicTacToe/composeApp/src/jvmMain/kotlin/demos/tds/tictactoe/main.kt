@@ -4,6 +4,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.mongodb.kotlin.client.MongoClient
 
+const val DB_NAME = "tictactoe"
+
 /**
  * Demo application for the TDS course.
  *
@@ -18,7 +20,7 @@ fun main() {
                 onCloseRequest = ::exitApplication,
                 title = "",
             ) {
-                App(dbClient = dbClient)
+                App(dbClient = dbClient, dbName = DB_NAME)
             }
         }
     }

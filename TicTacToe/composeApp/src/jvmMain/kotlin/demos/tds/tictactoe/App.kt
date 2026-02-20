@@ -4,8 +4,8 @@ import androidx.compose.runtime.*
 import com.mongodb.kotlin.client.MongoClient
 import demos.tds.tictactoe.common.domain.User
 import demos.tds.tictactoe.common.ui.theme.AppTheme
-import demos.tds.tictactoe.game.GameScreen
-import demos.tds.tictactoe.lobby.LobbyServiceMongoDB
+import demos.tds.tictactoe.game.ui.GameScreen
+import demos.tds.tictactoe.lobby.infrastructure.LobbyMongoDB
 import demos.tds.tictactoe.lobby.ui.LobbyScreen
 import demos.tds.tictactoe.lobby.ui.LobbyScreenViewModel
 import demos.tds.tictactoe.settings.SettingsScreen
@@ -16,11 +16,23 @@ import demos.tds.tictactoe.title.TitleScreen
  * The application screens.
  * In our context, a screen is the set of elements used to display a specific part of the app.
  */
-enum class AppScreen {
-    Title,
-    Settings,
-    Lobby,
-    Game
+sealed class AppScreen {
+
+    data class Title(val user: User?) : AppScreen() {
+        companion object { val name: String = "Title" }
+    }
+
+    data class Settings(val user: User?) : AppScreen() {
+        companion object { val name: String = "Settings" }
+    }
+
+    data class Lobby(val user: User) : AppScreen() {
+        companion object { val name: String = "Lobby" }
+    }
+
+    object Game : AppScreen() {
+        val name: String = "Game"
+    }
 }
 
 /**
@@ -30,44 +42,44 @@ enum class AppScreen {
 @Composable
 fun App(
     dbClient: MongoClient,
-    startScreen: AppScreen = AppScreen.Title,
-    initialUser: User? = null
+    dbName: String,
+    startScreen: AppScreen = AppScreen.Title(user = null),
 ) {
 
     AppTheme {
 
-        var localUser by remember { mutableStateOf(initialUser) }
-
         var currentScreen by remember { mutableStateOf(value = startScreen) }
         val scope = rememberCoroutineScope()
 
-        when (currentScreen) {
+        when (val observedCurrentScreen = currentScreen) {
 
-            AppScreen.Title ->
+            is AppScreen.Title ->
                 TitleScreen(
-                    localUser = localUser,
-                    onStart = { currentScreen = AppScreen.Lobby },
-                    onSettingsSelected = { currentScreen = AppScreen.Settings }
+                    localUser = observedCurrentScreen.user,
+                    onStart = {
+                        if (observedCurrentScreen.user != null)
+                            currentScreen = AppScreen.Lobby(observedCurrentScreen.user)
+                    },
+                    onSettingsSelected = { currentScreen = AppScreen.Settings(observedCurrentScreen.user) }
                 )
 
-            AppScreen.Lobby -> {
+            is AppScreen.Lobby -> {
                 LobbyScreen(
                     viewModel = LobbyScreenViewModel(
-                        // TODO: This is a good example of the usefulness of using a sealed hierarchy instead of enums.
-                        localUser = localUser ?: throw IllegalStateException("Local user is null"),
-                        service = LobbyServiceMongoDB(dbClient = dbClient),
+                        localUser = observedCurrentScreen.user,
+                        service = LobbyMongoDB(dbClient = dbClient, dbName = dbName),
                         scope = scope
                     ),
                     onUserChallenged = { currentScreen = AppScreen.Game },
-                    onLeave = { currentScreen = AppScreen.Title }
+                    onLeave = { currentScreen = AppScreen.Title(observedCurrentScreen.user) }
                 )
             }
 
-            AppScreen.Game -> GameScreen()
+            is AppScreen.Game -> GameScreen()
 
-            AppScreen.Settings -> SettingsScreen(
-                user = localUser,
-                onLeave = { localUser = it; currentScreen = AppScreen.Title }
+            is AppScreen.Settings -> SettingsScreen(
+                user = observedCurrentScreen.user,
+                onLeave = { currentScreen = AppScreen.Title(user = it) }
             )
         }
     }

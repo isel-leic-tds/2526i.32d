@@ -1,12 +1,12 @@
-package demos.tds.tictactoe.lobby
+package demos.tds.tictactoe.lobby.domain
 
 import demos.tds.tictactoe.common.domain.User
 import kotlinx.coroutines.delay
 
 /**
- * Abstraction that characterizes the lobby service. This service encapsulates the logic of a lobby.
+ * Abstraction that characterizes a lobby.
  */
-interface LobbyService {
+interface Lobby {
     /**
      * Gets the list of users currently in the lobby.
      */
@@ -24,10 +24,10 @@ interface LobbyService {
 }
 
 /**
- * Fake implementation of the lobby service.
+ * Fake implementation of the lobby.
  */
 @Suppress("unused")
-class FakeLobbyService : LobbyService {
+class FakeLobby : Lobby {
 
 
     private val users = mutableListOf(

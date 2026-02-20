@@ -1,6 +1,5 @@
-package demos.tds.tictactoe.game
+package demos.tds.tictactoe.game.domain
 
-import demos.tds.tictactoe.game.domain.Marker
 import kotlin.test.Test
 
 class MarkerTests {

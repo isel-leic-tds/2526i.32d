@@ -1,4 +1,4 @@
-package demos.tds.tictactoe.lobby
+package demos.tds.tictactoe.lobby.ui
 
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.test.*
@@ -6,8 +6,8 @@ import demos.tds.tictactoe.AppScreen
 import demos.tds.tictactoe.common.domain.Challenge
 import demos.tds.tictactoe.common.domain.User
 import demos.tds.tictactoe.common.ui.TopBarBackButtonTag
-import demos.tds.tictactoe.lobby.ui.LobbyScreen
-import demos.tds.tictactoe.lobby.ui.LobbyScreenViewModel
+import demos.tds.tictactoe.lobby.domain.FakeLobby
+import demos.tds.tictactoe.lobby.domain.Lobby
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -26,7 +26,7 @@ class LobbyScreenTests {
                 viewModel = LobbyScreenViewModel(
                     localUser = localTestUser,
                     scope = scope,
-                    service = FakeLobbyService()
+                    service = FakeLobby()
                 )
             )
         }
@@ -47,7 +47,7 @@ class LobbyScreenTests {
                 viewModel = LobbyScreenViewModel(
                     scope = scope,
                     localUser = localTestUser,
-                    service = FakeLobbyService()
+                    service = FakeLobby()
                 ),
                 onLeave = { onLeaveCalled = true }
             )
@@ -73,7 +73,7 @@ class LobbyScreenTests {
                 viewModel = LobbyScreenViewModel(
                     scope = scope,
                     localUser = localTestUser,
-                    service = object : LobbyService {
+                    service = object : Lobby {
                         override suspend fun getUsers(): List<User> = listOf(userToSelect)
                         override suspend fun enterLobby(user: User): List<User> = emptyList()
                         override suspend fun leaveLobby(user: User) {}
@@ -106,7 +106,7 @@ class LobbyScreenTests {
                 viewModel = LobbyScreenViewModel(
                     scope = scope,
                     localUser = localTestUser,
-                    service = object : LobbyService {
+                    service = object : Lobby {
                         override suspend fun getUsers(): List<User> = usersInLobby
                         override suspend fun enterLobby(user: User): List<User> = emptyList()
                         override suspend fun leaveLobby(user: User) { }

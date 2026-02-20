@@ -1,12 +1,5 @@
-package demos.tds.tictactoe.game
+package demos.tds.tictactoe.game.domain
 
-import demos.tds.tictactoe.game.domain.Board
-import demos.tds.tictactoe.game.domain.BoardResult
-import demos.tds.tictactoe.game.domain.Coordinate
-import demos.tds.tictactoe.game.domain.Marker
-import demos.tds.tictactoe.game.domain.getResult
-import demos.tds.tictactoe.game.domain.hasWon
-import demos.tds.tictactoe.game.domain.isTied
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

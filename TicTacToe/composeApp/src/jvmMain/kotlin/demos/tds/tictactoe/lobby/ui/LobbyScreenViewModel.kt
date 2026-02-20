@@ -1,17 +1,14 @@
 package demos.tds.tictactoe.lobby.ui
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.Snapshot
 import demos.tds.tictactoe.common.domain.User
-import demos.tds.tictactoe.lobby.LobbyService
+import demos.tds.tictactoe.lobby.domain.Lobby
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 /**
  * The possible stats of the lobby screen.
@@ -33,10 +30,8 @@ sealed interface LobbyScreenState {
 class LobbyScreenViewModel(
     val localUser: User,
     private val scope: CoroutineScope,
-    private val service: LobbyService
+    private val service: Lobby
 ) {
-
-    private val logger: Logger = LoggerFactory.getLogger("LobbyScreenViewModel")
 
     // IMPLEMENTATION NOTE: I am using snapshot updates to ensure that state observers are notified, regardless of
     // being inside a @Composable function or not. This simplifies the view model tests for this view model design.
@@ -71,7 +66,7 @@ class LobbyScreenViewModel(
 
         updateState(LobbyScreenState.Loading(usersInLobby = displayedList))
         val usersInLobby = service.getUsers()
-        updateState(LobbyScreenState.Displaying(usersInLobby = usersInLobby))
+        updateState(LobbyScreenState.Displaying(usersInLobby = usersInLobby.filter { it != localUser }))
     }
 
     /**

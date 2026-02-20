@@ -1,4 +1,4 @@
-package demos.tds.tictactoe.game
+package demos.tds.tictactoe.game.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

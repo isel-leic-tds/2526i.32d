@@ -1,6 +1,8 @@
 package demos.tds.tictactoe.game.domain
 
+import demos.tds.tictactoe.common.domain.Challenge
 import demos.tds.tictactoe.common.domain.User
+import demos.tds.tictactoe.common.domain.firstToMove
 
 /**
  * Represents a Tic-Tac-Toe game. Instances are immutable.
@@ -29,7 +31,6 @@ fun Game.makeMove(at: Coordinate): Game {
 /**
  * Gets which marker is to be assigned to the local player for the given challenge.
  */
-/*
 fun getLocalPlayerMarker(localPlayer: User, challenge: Challenge) =
     if (localPlayer == challenge.firstToMove) Marker.firstToMove
     else Marker.firstToMove.other
@@ -40,5 +41,3 @@ fun getLocalPlayerMarker(localPlayer: User, challenge: Challenge) =
 fun Game.getResult() =
     if (forfeitedBy != null) BoardResult.HasWinner(forfeitedBy.other)
     else board.getResult()
-
- */

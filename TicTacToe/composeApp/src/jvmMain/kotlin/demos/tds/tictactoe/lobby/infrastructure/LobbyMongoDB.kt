@@ -1,26 +1,26 @@
-package demos.tds.tictactoe.lobby
+package demos.tds.tictactoe.lobby.infrastructure
 
 import com.mongodb.client.model.Filters
 import com.mongodb.kotlin.client.MongoClient
 import com.mongodb.kotlin.client.MongoDatabase
 import demos.tds.tictactoe.common.domain.User
+import demos.tds.tictactoe.lobby.domain.Lobby
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-private const val DB_NAME = "tictactoe"
 private const val LOBBY_COLLECTION_NAME = "lobby"
 
 /**
- * Implementation of [LobbyService] that uses MongoDB as a backing store.
+ * Implementation of [Lobby] that uses MongoDB as a backing store.
  */
-class LobbyServiceMongoDB(private val dbClient: MongoClient) : LobbyService {
+class LobbyMongoDB(private val dbClient: MongoClient, private val dbName: String) : Lobby {
 
     private val logger: Logger = LoggerFactory.getLogger("LobbyServiceMongoDB")
 
     private val database: MongoDatabase by lazy {
-        dbClient.getDatabase(DB_NAME)
+        dbClient.getDatabase(databaseName = dbName)
     }
 
     /**

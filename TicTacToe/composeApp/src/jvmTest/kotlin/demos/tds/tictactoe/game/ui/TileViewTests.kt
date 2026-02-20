@@ -5,9 +5,6 @@ import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
-import demos.tds.tictactoe.game.TileView
-import demos.tds.tictactoe.game.TileViewImageTag
-import demos.tds.tictactoe.game.TileViewTag
 import demos.tds.tictactoe.game.domain.Marker
 import kotlin.test.Test
 import kotlin.test.assertFalse

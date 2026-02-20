@@ -1,8 +1,5 @@
-package demos.tds.tictactoe.game
+package demos.tds.tictactoe.game.domain
 
-import demos.tds.tictactoe.game.domain.Coordinate
-import demos.tds.tictactoe.game.domain.isValidColumn
-import demos.tds.tictactoe.game.domain.isValidRow
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

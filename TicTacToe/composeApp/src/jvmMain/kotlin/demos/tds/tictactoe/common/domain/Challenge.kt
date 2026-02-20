@@ -7,7 +7,6 @@ package demos.tds.tictactoe.common.domain
  */
 data class Challenge(val challenger: User, val challenged: User)
 
-
 /**
  * The first player to move for this challenge.
  */

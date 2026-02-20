@@ -1,4 +1,4 @@
-package demos.tds.tictactoe.game
+package demos.tds.tictactoe.game.ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
